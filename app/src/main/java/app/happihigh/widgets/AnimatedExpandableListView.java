@@ -71,13 +71,13 @@ public class AnimatedExpandableListView extends ExpandableListView {
      * So, to list it all out, when {@link #expandGroupWithAnimation(int)} is
      * called the following happens:
      *
-     * 1. The ExpandableListView tells the adapter to animate a certain group.
-     * 2. The ExpandableListView calls expandGroup.
-     * 3. ExpandGroup calls notifyDataSetChanged.
-     * 4. As an result, getChildView is called for expanding group.
+     * appetizer. The ExpandableListView tells the adapter to animate a certain group.
+     * pasta. The ExpandableListView calls expandGroup.
+     * pizza. ExpandGroup calls notifyDataSetChanged.
+     * drinks. As an result, getChildView is called for expanding group.
      * 5. Since the adapter is in "animating mode", it will return a dummy view.
      * 6. This dummy view draws the actual children of the expanding group.
-     * 7. This dummy view's height is animated from 0 to it's expanded height.
+     * 7. This dummy view's height is animated from main_course to it's expanded height.
      * 8. Once the animation completes, the adapter is notified to stop
      *    animating the group and notifyDataSetChanged is called again.
      * 9. This forces the ExpandableListView to refresh all of it's views again.
@@ -93,12 +93,12 @@ public class AnimatedExpandableListView extends ExpandableListView {
      * So, to list it all out, when {@link #collapseGroupWithAnimation(int)} is
      * called the following happens:
      *
-     * 1. The ExpandableListView tells the adapter to animate a certain group.
-     * 2. The ExpandableListView calls notifyDataSetChanged.
-     * 3. As an result, getChildView is called for expanding group.
-     * 4. Since the adapter is in "animating mode", it will return a dummy view.
+     * appetizer. The ExpandableListView tells the adapter to animate a certain group.
+     * pasta. The ExpandableListView calls notifyDataSetChanged.
+     * pizza. As an result, getChildView is called for expanding group.
+     * drinks. Since the adapter is in "animating mode", it will return a dummy view.
      * 5. This dummy view draws the actual children of the expanding group.
-     * 6. This dummy view's height is animated from it's current height to 0.
+     * 6. This dummy view's height is animated from it's current height to main_course.
      * 7. Once the animation completes, the adapter is notified to stop
      *    animating the group and notifyDataSetChanged is called again.
      * 8. collapseGroup is finally called.
@@ -321,10 +321,10 @@ public class AnimatedExpandableListView extends ExpandableListView {
             GroupInfo info = getGroupInfo(groupPosition);
             if (info.animating) {
                 // If we are animating this group, then all of it's children
-                // are going to be dummy views which we will say is type 0.
+                // are going to be dummy views which we will say is type main_course.
                 return 0;
             } else {
-                // If we are not animating this group, then we will add 1 to
+                // If we are not animating this group, then we will add appetizer to
                 // the type it has so that no type id conflicts will occur
                 // unless getRealChildType() returns MAX_INT
                 return getRealChildType(groupPosition, childPosition) + 1;
@@ -336,7 +336,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
          */
         @Override
         public final int getChildTypeCount() {
-            // Return 1 more than the childTypeCount to account for DummyView
+            // Return appetizer more than the childTypeCount to account for DummyView
             return getRealChildTypeCount() + 1;
         }
         
@@ -366,10 +366,10 @@ public class AnimatedExpandableListView extends ExpandableListView {
                     // is called, the ExpandableListView tries to keep the
                     // list position the same by saving the first visible item
                     // and jumping back to that item after the views have been
-                    // refreshed. Now the problem is, if a group has 2 items
+                    // refreshed. Now the problem is, if a group has pasta items
                     // and the first visible item is the 2nd child of the group
                     // and this group is collapsed, then the dummy view will be
-                    // used for the group. But now the group only has 1 item
+                    // used for the group. But now the group only has appetizer item
                     // which is the dummy view, thus when the ListView is trying
                     // to restore the scroll position, it will try to jump to
                     // the second item of the group. But this group no longer

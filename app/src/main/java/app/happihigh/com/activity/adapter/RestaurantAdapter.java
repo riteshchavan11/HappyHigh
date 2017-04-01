@@ -1,7 +1,7 @@
 package app.happihigh.com.activity.adapter;
 
 /**
- * Created by 312817 on 3/19/2017.
+ * Created by 312817 on pizza/19/2017.
  */
 
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,11 +28,12 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Da
             .OnClickListener {
         TextView label;
         TextView address;
-
+        ImageView restro_img;
         public DataObjectHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.name);
             address = (TextView) itemView.findViewById(R.id.address);
+            restro_img = (ImageView) itemView.findViewById(R.id.restaurant_image);
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -63,7 +65,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Da
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.label.setText(mDataset.get(position).getRes_name());
-        holder.address.setText(mDataset.get(position).getRes_Image_url());
+        holder.address.setText(mDataset.get(position).getAddress());
+        holder.restro_img.setImageBitmap(mDataset.get(position).getRes_Image());
     }
 
     public void addItem(RestaurantObject dataObj, int index) {

@@ -2,6 +2,8 @@ package app.happihigh.com.activity.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +21,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import app.happihigh.com.activity.other.Utility;
 import app.happihigh.com.happihigh.R;
 import app.happihigh.widgets.AnimatedExpandableListView;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity{
     private AnimatedExpandableListView listView;
     private ExampleAdapter adapter;
 
@@ -34,10 +38,27 @@ public class MenuActivity extends AppCompatActivity {
     String[] pasta = {"Barbina","Bucatini","Fusilli","Matriciani","Maccheroni alla molinara"};
     String[] pizza = {"Double Cheese Pizza","Mexican Green Wave","Margherita","Quattro Formaggi","Mexicana"};
     public static final String TAG = "Menu Activity";
+    Bitmap res_img_bmp;
+    String res_name;
+
+    ImageView restro_img;
+    TextView restro_name;
+
+    Utility utility;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        utility = Utility.getInstance();
+        restro_img = (ImageView) findViewById(R.id.restro_img);
+        restro_name = (TextView) findViewById(R.id.restro_name);
+
+        Bundle extras = getIntent().getExtras();
+        res_img_bmp = utility.getImg_bitmap();
+        res_name = extras.getString("restro_name");
+
+        restro_img.setImageBitmap(res_img_bmp);
+        restro_name.setText(res_name);
 
         List<GroupItem> items = new ArrayList<GroupItem>();
         // Populate our list with groups and it's children
@@ -46,53 +67,73 @@ public class MenuActivity extends AppCompatActivity {
             GroupItem item = new GroupItem();
             Log.e(TAG,"Title : "+menu[i]);
             item.title = menu[i];
-
+            Bitmap icon = null;
             switch (i){
                 case 0:
+                    icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.maincourse);
+                    item.img = icon;
                     for(int j = 0; j < main_course.length; j++) {
                         ChildItem child = new ChildItem();
                         child.title = main_course[j];
-                        child.hint = "Too awesome";
+                        Random rand = new Random();
+                        int price = rand.nextInt(100);
+                        child.hint = "Rs. 10"+price;
 
                         item.items.add(child);
                     }
 
                     break;
                 case 1:
+                    icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.appetizer);
+                    item.img = icon;
                     for(int j = 0; j < appetizers.length; j++) {
                         ChildItem child = new ChildItem();
                         child.title = appetizers[j];
-                        child.hint = "Too awesome";
+                        Random rand = new Random();
+                        int price = rand.nextInt(100);
+                        child.hint = "Rs. "+price;
 
                         item.items.add(child);
                     }
 
                     break;
                 case 2:
+                    icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.pasta);
+                    item.img = icon;
                     for(int j = 0; j < pasta.length; j++) {
                         ChildItem child = new ChildItem();
                         child.title = pasta[j];
-                        child.hint = "Too awesome";
+                        Random rand = new Random();
+                        int price = rand.nextInt(100);
+                        child.hint = "Rs. "+price;
 
                         item.items.add(child);
                     }
 
                     break;
                 case 3:
+                    icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.pizza);
+                    item.img = icon;
                     for(int j = 0; j < pizza.length; j++) {
                         ChildItem child = new ChildItem();
                         child.title = pizza[j];
-                        child.hint = "Too awesome";
+                        Random rand = new Random();
+                        int price = rand.nextInt(100);
+                        child.hint = "Rs. "+price;
 
                         item.items.add(child);
                     }
 
                     break;
                 case 4:
+                    icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.drinks);
+                    item.img = icon;
                     for(int j = 0; j < drinks.length; j++) {
                         ChildItem child = new ChildItem();
                         child.title = drinks[j];
-                        child.hint = "Too awesome";
+                        Random rand = new Random();
+                        int price = rand.nextInt(100);
+                        child.hint = "Rs. "+price;
 
                         item.items.add(child);
                     }
@@ -143,6 +184,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private static class GroupItem {
         String title;
+        Bitmap img;
         List<ChildItem> items = new ArrayList<ChildItem>();
     }
 
@@ -158,6 +200,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private static class GroupHolder {
         TextView title;
+        ImageView logo_img;
     }
 
     /**
@@ -233,13 +276,14 @@ public class MenuActivity extends AppCompatActivity {
                 holder = new GroupHolder();
                 convertView = inflater.inflate(R.layout.group_item, parent, false);
                 holder.title = (TextView) convertView.findViewById(R.id.tilte);
+                holder.logo_img = (ImageView) convertView.findViewById(R.id.menu_img);
                 convertView.setTag(holder);
             } else {
                 holder = (GroupHolder) convertView.getTag();
             }
 
             holder.title.setText(item.title);
-
+            holder.logo_img.setImageBitmap(item.img);
             return convertView;
         }
 

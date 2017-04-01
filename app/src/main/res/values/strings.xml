@@ -43,6 +43,8 @@
     <string name="font">sans-serif-light</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="special_instructions">Special Instructions</string>
+    <string name="special_hint">Example: extra cheese, side of dressing, etc.</string>
 
 
 </resources>

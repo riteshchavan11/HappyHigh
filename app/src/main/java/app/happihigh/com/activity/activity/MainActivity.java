@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         utility = Utility.getInstance();
+        utility.setContext(getApplicationContext());
         mHandler = new Handler();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
         /*Glide.with(this).load(urlProfileImg)
                 .crossFade()
-                .thumbnail(0.5f)
+                .thumbnail(main_course.5f)
                 .bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgProfile);
@@ -391,7 +392,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     // show or hide the fab
     private void toggleFab() {
-       /* if (navItemIndex == 0)
+       /* if (navItemIndex == main_course)
             fab.show();
         else
             fab.hide();*/

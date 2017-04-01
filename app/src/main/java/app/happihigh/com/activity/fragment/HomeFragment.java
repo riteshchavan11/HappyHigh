@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -22,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,6 +101,7 @@ public class HomeFragment extends Fragment implements ConnectionCallbacks, OnCon
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         utility = Utility.getInstance();
+        utility.setContext(getContext());
         setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -118,7 +122,8 @@ public class HomeFragment extends Fragment implements ConnectionCallbacks, OnCon
             // can't get location
             // GPS or Network is not enabled
             // Ask user to enable GPS/network in settings
-            gps.showSettingsAlert();
+            Log.e(TAG,"can't get location GPS or Network is not enabled Ask user to enable GPS/network in settings");
+            //gps.showSettingsAlert();
         }
 
     }
@@ -187,8 +192,11 @@ public class HomeFragment extends Fragment implements ConnectionCallbacks, OnCon
         ArrayList results = new ArrayList<RestaurantObject>();
         for (int index = 0; index < 20; index++) {
             no_of_restro_found = index;
-            RestaurantObject obj = new RestaurantObject("Restaurant Name : " + index,
-                    "Address : " + index);
+            Bitmap icon = BitmapFactory.decodeResource(utility.getContext().getResources(),R.drawable.restaurant6);
+            RestaurantObject obj = new RestaurantObject();
+            obj.setRes_name("Restaurant Name : " + index);
+            obj.setAddress("Address : " + index);
+            obj.setRes_Image(icon);
             results.add(index, obj);
         }
         return results;
@@ -259,7 +267,7 @@ public class HomeFragment extends Fragment implements ConnectionCallbacks, OnCon
             public boolean onQueryTextSubmit(String s) {
                 if (s.length() < 4) {
                     Toast.makeText(getActivity(),
-                            "Your search query must not be less than 3 characters",
+                            "Your search query must not be less than pizza characters",
                             Toast.LENGTH_LONG).show();
                     return true;
                 } else {
@@ -320,6 +328,16 @@ public class HomeFragment extends Fragment implements ConnectionCallbacks, OnCon
             @Override
             public void onItemClick ( int position, View v){
                 Intent menu_intent = new Intent(utility.getContext(), MenuActivity.class);
+                String name = (String) ((TextView)v.findViewById(R.id.name)).getText();
+                Log.e(TAG,"Restaurant Name : "+name);
+
+                ImageView img = (ImageView)v.findViewById(R.id.restaurant_image);
+                img.buildDrawingCache();
+                Bitmap image= img.getDrawingCache();
+                utility.setImg_bitmap(image);
+                Bundle extras = new Bundle();
+                extras.putString("restro_name",name);
+                menu_intent.putExtras(extras);
                 startActivity(menu_intent);
 
             Log.e(LOG_TAG, " Clicked on Item " + position);

@@ -95,11 +95,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         //check gps enable
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
+        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
             Toast.makeText(context, "GPS is disable!", Toast.LENGTH_LONG).show();
-        else
+            Log.e(TAG,"GPS is disable!");
+        }
+        else {
             Toast.makeText(context, "GPS is Enable!", Toast.LENGTH_LONG).show();
-
+            Log.e(TAG,"GPS is Enable!");
+        }
 
 
 

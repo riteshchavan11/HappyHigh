@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 /**
- * Created by 312817 on 3/15/2017.
+ * Created by 312817 on pizza/15/2017.
  */
 
 public class Utility {
@@ -101,4 +101,13 @@ public class Utility {
     }
 
 
+    private Bitmap img_bitmap;
+
+    public Bitmap getImg_bitmap() {
+        return img_bitmap;
+    }
+
+    public void setImg_bitmap(Bitmap img_bitmap) {
+        this.img_bitmap = img_bitmap;
+    }
 }

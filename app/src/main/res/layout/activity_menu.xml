@@ -4,13 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.happihigh.com.activity.activity.MenuActivity">
+    android:orientation="vertical"
+    tools:context="app.happihigh.com.activity.activity.MenuActivity"
+    android:background="@drawable/back_blur">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+
+        android:orientation="horizontal"
+        android:background="#00000000">
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/restro_img"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/restaurant1"
+            app:civ_border_color="#ffffff"
+            app:civ_border_width="2dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:gravity="left|center"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Chicken Tandoori Butter Masala "
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:id="@+id/restro_name"/>
+
+        <TextView
+            android:id="@+id/is_open"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="left"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Open Now"
+            android:textColor="#ffffff"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+
+    </LinearLayout>
 
     <app.happihigh.widgets.AnimatedExpandableListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="6dp"
-        android:background="@drawable/back_blur"/>
+        android:layout_marginTop="27dp"
+        android:dividerHeight="7dp"
+        />
 
 </LinearLayout>
