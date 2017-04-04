@@ -1,6 +1,7 @@
 package app.happihigh.com.activity.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -129,8 +130,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 .into(imgNavHeaderBg);
 
         // Loading profile image
-        imgProfile.setImageBitmap(utility.getImg());
-
+        if(utility.getImg() != null) {
+            imgProfile.setImageBitmap(utility.getImg());
+        }else{
+            Drawable res = getResources().getDrawable(R.drawable.default_profile);
+            imgProfile.setImageDrawable(res);
+        }
         /*Glide.with(this).load(urlProfileImg)
                 .crossFade()
                 .thumbnail(main_course.5f)

@@ -96,11 +96,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //check gps enable
         if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-            Toast.makeText(context, "GPS is disable!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "GPS is disable!", Toast.LENGTH_LONG).show();
             Log.e(TAG,"GPS is disable!");
         }
         else {
-            Toast.makeText(context, "GPS is Enable!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "GPS is Enable!", Toast.LENGTH_LONG).show();
             Log.e(TAG,"GPS is Enable!");
         }
 
@@ -349,8 +349,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!b)
             Log.e(TAG, "Sign in failed ");
         else {
-            new LoadGoogleProfileImage().execute(acct.getPhotoUrl().toString());
-
+            if(acct.getPhotoUrl() != null) {
+                new LoadGoogleProfileImage().execute(acct.getPhotoUrl().toString());
+            }else{
+                utility.setImg(null);
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 

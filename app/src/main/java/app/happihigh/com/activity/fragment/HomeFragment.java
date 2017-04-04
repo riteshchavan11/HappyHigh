@@ -256,7 +256,7 @@ public class HomeFragment extends Fragment implements ConnectionCallbacks, OnCon
         // modifying the text inside edittext component
         int id = sv.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = (TextView) sv.findViewById(id);
-        textView.setHint("Search location...");
+        textView.setHint("Search restaurant...");
         textView.setHintTextColor(getResources().getColor(android.R.color.darker_gray
         ));
         textView.setTextColor(getResources().getColor(android.R.color.holo_blue_bright));
