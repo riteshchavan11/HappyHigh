@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.LocationManager;
@@ -17,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,9 +40,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 
 import org.json.JSONException;
@@ -49,6 +54,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import app.happihigh.com.activity.other.Utility;
@@ -58,17 +65,24 @@ import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
-    private static final int RC_SIGN_IN = 100;
+
     private final String TAG = "HappiHigh";
     ImageView fblogin, google_login;
     Utility utility;
     private CallbackManager callbackManager;
     Activity act;
     ProgressDialog progressDialog;
-    SignInButton signInButton;
-    GoogleApiClient mGoogleApiClient;
+
     GoogleSignInAccount acct;
     Context context;
+
+    private GoogleSignInOptions gso;
+
+    //google api client
+    private GoogleApiClient mGoogleApiClient;
+
+    //Signin constant to check the activity result
+    private int RC_SIGN_IN = 100;
 
     private static final int PERMISSION_REQUEST_CODE = 200;
 
@@ -84,6 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         utility.setContext(context);
         final LocationManager manager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE );
         //ask permission
+        printhashkey();
         if (!checkPermission()) {
 
             requestPermission();
@@ -113,11 +128,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(this.getResources().getString(R.string.server_client_id))
+                .requestEmail().build();
 
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+       /* gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                .build();
+                .build();*/
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -133,6 +150,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.facebook_login).setOnClickListener(this);
 
 
+    }
+
+    private void printhashkey(){
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "app.happihigh.com.happihigh",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
     }
 
     private boolean checkPermission() {
@@ -191,6 +225,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void loginfacebook() {
+        LoginManager.getInstance().logOut();
         LoginManager.getInstance().logInWithReadPermissions(act, Arrays.asList("user_friends", "email", "public_profile", "user_birthday"));
 
         LoginManager.getInstance().registerCallback(callbackManager,
@@ -205,6 +240,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     @Override
                     public void onCancel() {
+                        Log.e(TAG,"OnCancel");
                     }
 
                     @Override
@@ -228,7 +264,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             String firstName = response.getJSONObject().getString("first_name");
                             String lastName = response.getJSONObject().getString("last_name");
                             String gender = response.getJSONObject().getString("gender");
-                            String bday = response.getJSONObject().getString("birthday");
+                            //String bday = response.getJSONObject().getString("birthday");
 
                             utility.setName(firstName + " " + lastName);
                             utility.setEmail(email);
@@ -244,7 +280,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.i("Login" + "FirstName", firstName);
                             Log.i("Login" + "LastName", lastName);
                             Log.i("Login" + "Gender", gender);
-                            Log.i("Login" + "Bday", bday);
+                            //Log.i("Login" + "Bday", bday);
 
                             new getProfilepic().execute(response.getJSONObject().getString("id"));
 
@@ -292,7 +328,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void signIn() {
+        //Creating an intent
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient);
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+
+        //Starting intent for result
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -304,29 +344,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.e(TAG,"requestCode  :  "+requestCode );
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            //Calling a new function to handle signin
             handleSignInResult(result);
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    public void LogoutfromGoogle() {
-        Log.e(TAG, "in LogoutfromGoogle");
-        Auth.GoogleSignInApi.signOut(utility.getGoogleApiClient()).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        Log.e(TAG, "Status : " + status.getStatusCode() + "\n" + status.getStatusMessage() + "\n" + status.getStatus());
-                        updateUI(false);
-                    }
-                });
+    private void handleSignInResult(GoogleSignInResult result) {
+        //If the login succeed
+        Log.d(TAG, "status :" + result.getStatus());
+        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        if (result.isSuccess()) {
+            //Getting google account
+            GoogleSignInAccount acct = result.getSignInAccount();
+
+            utility.setLoggedIn(true);
+            utility.setLoggedOut(false);
+            google_login.setEnabled(true);
+
+            acct = result.getSignInAccount();
+            Log.e(TAG, "Name : " + acct.getDisplayName());
+            utility.setName(acct.getDisplayName());
+            utility.setEmail(acct.getEmail());
+            Log.e(TAG, "image url : " + acct.getPhotoUrl());
+            updateUI(true);
+            //Initializing image loader
+            updateUI(true);
+
+        } else {
+            //If login fails
+            Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
+            updateUI(false);
+        }
     }
 
-    private void handleSignInResult(GoogleSignInResult result) {
+   /* private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
@@ -343,7 +400,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // Signed out, show unauthenticated UI.
             updateUI(false);
         }
-    }
+    }*/
 
     private void updateUI(boolean b) {
         if (!b)

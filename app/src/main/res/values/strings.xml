@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">HappiHigh</string>
-    <string name="facebook_app_id">1873593192858984</string>
-    <string name="fb_login_protocol_scheme">fb1873593192858984</string>
+    <!--<string name="facebook_app_id">1873593192858984</string>
+    <string name="fb_login_protocol_scheme">fb1873593192858984</string>-->
+    <string name="facebook_app_id">422868001410009</string>
+    <string name="fb_login_protocol_scheme">fb422868001410009</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_main">MainActivity</string>
@@ -45,6 +47,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="special_instructions">Special Instructions</string>
     <string name="special_hint">Example: extra cheese, side of dressing, etc.</string>
+    <string name="server_client_id">AIzaSyBc8PmCvf3tm2jUytshjLfpBxYNMaZQSD4</string>
 
 
 </resources>

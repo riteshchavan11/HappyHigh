@@ -1,33 +1,87 @@
 {
   "project_info": {
-    "project_number": "603128810820",
-    "project_id": "firebase-happihigh"
+    "project_number": "395605338560",
+    "project_id": "happyhigh-1492236437022"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:603128810820:android:46f0de9aee6507cf",
+        "mobilesdk_app_id": "1:395605338560:android:9abc4facf6e2b472",
+        "android_client_info": {
+          "package_name": "app.happihigh.com.activity.activity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395605338560-95rmk1sij3hiklt8sokh8do1r8f0jh6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc8PmCvf3tm2jUytshjLfpBxYNMaZQSD4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395605338560:android:37731f4426f25388",
+        "android_client_info": {
+          "package_name": "app.happihigh.com.activity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395605338560-95rmk1sij3hiklt8sokh8do1r8f0jh6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc8PmCvf3tm2jUytshjLfpBxYNMaZQSD4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395605338560:android:46f0de9aee6507cf",
         "android_client_info": {
           "package_name": "app.happihigh.com.happihigh"
         }
       },
       "oauth_client": [
         {
-          "client_id": "603128810820-hdc731ir68s55nnlcgfip8dhrftom7fo.apps.googleusercontent.com",
+          "client_id": "395605338560-95rmk1sij3hiklt8sokh8do1r8f0jh6r.apps.googleusercontent.com",
           "client_type": 3
-        },
-        {
-          "client_id": "603128810820-ltp3r0euund87v3pajps6hg3npnbbtvu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "app.happihigh.com.happihigh",
-            "certificate_hash": "4551db5c738b452c1100cf0abb4ea1070a87a909"
-          }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAVkPY8jXwnboAt6PiAhj0KlUvE2RJm1Uo"
+          "current_key": "AIzaSyBc8PmCvf3tm2jUytshjLfpBxYNMaZQSD4"
         }
       ],
       "services": {
