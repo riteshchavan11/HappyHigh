@@ -258,31 +258,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         // Application code
                         try {
-                            Log.i("Response", response.toString());
+                            if(object.isNull("id")){
 
-                            String email = response.getJSONObject().getString("email");
-                            String firstName = response.getJSONObject().getString("first_name");
-                            String lastName = response.getJSONObject().getString("last_name");
-                            String gender = response.getJSONObject().getString("gender");
-                            //String bday = response.getJSONObject().getString("birthday");
+                            }else {
+                                Log.i("Response", response.toString());
+                                Log.e("JSON Object", object.toString());
+                                String email = response.getJSONObject().getString("email");
+                                String firstName = response.getJSONObject().getString("first_name");
+                                String lastName = response.getJSONObject().getString("last_name");
+                                String gender = response.getJSONObject().getString("gender");
+                                //String bday = response.getJSONObject().getString("birthday");
 
-                            utility.setName(firstName + " " + lastName);
-                            utility.setEmail(email);
+                                utility.setName(firstName + " " + lastName);
+                                utility.setEmail(email);
+                                String id;
+                                Profile profile = Profile.getCurrentProfile();
+                                Log.e(TAG,"profile : "+profile);
+                                if(profile == null){
+                                    id = object.getString("id");
+                                    Log.e("ID ", id);
+                                }else {
+                                    id = profile.getId();
+                                    Log.e("ID ", id);
+                                    String link = profile.getLinkUri().toString();
+                                    Log.i("Link", link);
+                                    if (Profile.getCurrentProfile() != null) {
+                                        Log.i("Login", "ProfilePic" + Profile.getCurrentProfile().getProfilePictureUri(200, 200));
+                                    }
+                                    //Log.i("Login" + "Bday", bday);
 
-                            Profile profile = Profile.getCurrentProfile();
-                            String id = profile.getId();
-                            String link = profile.getLinkUri().toString();
-                            Log.i("Link", link);
-                            if (Profile.getCurrentProfile() != null) {
-                                Log.i("Login", "ProfilePic" + Profile.getCurrentProfile().getProfilePictureUri(200, 200));
+
+                                }
+                                Log.i("Login" + "Email", email);
+                                Log.i("Login" + "FirstName", firstName);
+                                Log.i("Login" + "LastName", lastName);
+                                Log.i("Login" + "Gender", gender);
+
+                                new getProfilepic().execute(id);
                             }
-                            Log.i("Login" + "Email", email);
-                            Log.i("Login" + "FirstName", firstName);
-                            Log.i("Login" + "LastName", lastName);
-                            Log.i("Login" + "Gender", gender);
-                            //Log.i("Login" + "Bday", bday);
-
-                            new getProfilepic().execute(response.getJSONObject().getString("id"));
 
 
                         } catch (JSONException e) {

@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.happihigh.com.happihigh">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:name="app.happihigh.application.HappiHighApplication"
@@ -54,7 +54,10 @@
         <uses-library android:name="com.google.android.maps" />
 
         <activity android:name="app.happihigh.com.activity.activity.DishDetailsActivity" />
-        <activity android:name="app.happihigh.com.activity.activity.MenuActivity"></activity>
+        <activity android:name="app.happihigh.com.activity.activity.MenuActivity" />
+        <activity android:name="app.happihigh.com.activity.activity.CartActivity">
+
+        </activity>
     </application>
 
 </manifest>

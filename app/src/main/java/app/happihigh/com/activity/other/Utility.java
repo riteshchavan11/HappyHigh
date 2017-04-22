@@ -6,6 +6,9 @@ import android.graphics.Bitmap;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by 312817 on pizza/15/2017.
  */
@@ -109,5 +112,25 @@ public class Utility {
 
     public void setImg_bitmap(Bitmap img_bitmap) {
         this.img_bitmap = img_bitmap;
+    }
+
+    private ArrayList<HashMap<String,String>> cart_list;
+
+    public ArrayList<HashMap<String, String>> getCart_list() {
+        return cart_list;
+    }
+
+    public void setCart_list(ArrayList<HashMap<String, String>> cart_list) {
+        this.cart_list = cart_list;
+    }
+
+    private ArrayList<HashMap<String, Bitmap>> img_list;
+
+    public ArrayList<HashMap<String, Bitmap>> getImg_list() {
+        return img_list;
+    }
+
+    public void setImg_list(ArrayList<HashMap<String, Bitmap>> img_list) {
+        this.img_list = img_list;
     }
 }

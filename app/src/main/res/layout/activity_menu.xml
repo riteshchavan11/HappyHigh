@@ -60,13 +60,28 @@
 
 
     </LinearLayout>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:orientation="vertical">
     <app.happihigh.widgets.AnimatedExpandableListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="27dp"
         android:dividerHeight="7dp"
+        android:layout_weight="0.85"
         />
+    <Button
+        android:id="@+id/btn_checkout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Go To Cart"
+        android:layout_weight="0.15"
+        />
+</LinearLayout>
+
+
 
 </LinearLayout>
